@@ -1,41 +1,67 @@
-// Client side C/C++ program to demonstrate Socket programming 
-#include <stdio.h> 
-#include <sys/socket.h> 
-#include <arpa/inet.h> 
-#include <unistd.h> 
-#include <string.h> 
-#define PORT 8080 
+#define _WIN32_WINNT 0x501
+#include <iostream>
+#include <windows.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <iphlpapi.h>
+#include <stdio.h>
+#define DEFAULT_PORT "27015"
    
 int main(int argc, char const *argv[]) 
 { 
-    int sock = 0, valread; 
-    struct sockaddr_in serv_addr; 
-    char *hello = "Hello from client"; 
-    char buffer[1024] = {0}; 
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) 
-    { 
-        printf("\n Socket creation error \n"); 
-        return -1; 
-    } 
-   
-    serv_addr.sin_family = AF_INET; 
-    serv_addr.sin_port = htons(PORT); 
-       
-    // Convert IPv4 and IPv6 addresses from text to binary form 
-    if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0)  
-    { 
-        printf("\nInvalid address/ Address not supported \n"); 
-        return -1; 
-    } 
-   
-    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) 
-    { 
-        printf("\nConnection Failed \n"); 
-        return -1; 
-    } 
-    send(sock , hello , strlen(hello) , 0 ); 
-    printf("Hello message sent\n"); 
-    valread = read( sock , buffer, 1024); 
-    printf("%s\n",buffer ); 
+    WSADATA wsaData;
+    // Initialize Winsock
+    if (WSAStartup(MAKEWORD(2,2), &wsaData) != 0){
+        printf("WSAStartup failed: %d", WSAGetLastError());
+        return 1;
+    }
+
+
+    int iResult;
+    struct addrinfo *result = NULL,
+                    *ptr    = NULL,
+                    hints;
+    
+    ZeroMemory( &hints, sizeof(hints) );
+    hints.ai_family     = AF_UNSPEC;
+    hints.ai_socktype   = SOCK_STREAM;
+    hints.ai_protocol   = IPPROTO_TCP;
+
+    iResult = getaddrinfo(argv[1], DEFAULT_PORT, &hints, &result);
+    if (iResult != 0){
+        printf("getaddrinfo failed: %d\n", iResult);
+        WSACleanup();
+        return 1;
+    }
+
+    SOCKET ConnectSocket = INVALID_SOCKET;
+
+    ptr = result;
+
+    // Create a SOCKET for connecting to server
+    ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
+    if (ConnectSocket == INVALID_SOCKET) {
+        printf("Error at socket(): &ld\n", WSAGetLastError());
+        freeaddrinfo(result);
+        WSACleanup();
+        return 1;
+    }
+
+    // Connect to server.
+    std::cout << "Connecting to " << ptr->ai_addr << " : " << (int)ptr->ai_addrlen << std::endl;
+    iResult = connect( ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
+    if (iResult == SOCKET_ERROR) {
+        closesocket(ConnectSocket);
+        ConnectSocket = INVALID_SOCKET;
+    }
+
+    freeaddrinfo(result);
+
+    if (ConnectSocket == INVALID_SOCKET) {
+        printf("Unable to connect to server!\n");
+        WSACleanup();
+        return 1;
+    }
+
     return 0; 
 } 
