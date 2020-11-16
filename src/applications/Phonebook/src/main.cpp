@@ -1,12 +1,13 @@
 #include <iostream>
 #include "Contact.h"
+#include "Phonebook.h"
 #include <string.h>
 int main(){
-    Contact contact1("Brian", 12345678);
-    Contact contact2("asss", 12345678);
-    Contact contact3("Basssss", 12345678);
+    Phonebook phonebook(125);
 
-    std::cout << contact1.contactName << std::endl;
-    std::cout << contact1.Contacts.size() << std::endl;
+    phonebook.AddContact(Contact("Brian", 12345));
+
+    std::cout << phonebook.Contacts.size() << std::endl;
+
     return 0;
 }

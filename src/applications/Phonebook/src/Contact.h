@@ -5,7 +5,6 @@
 #include <vector>
 class Contact{
     public:
-        static inline std::vector<Contact*> Contacts;
         std::string contactName;
         int contactNumber;
         Contact(std::string _contactName, int _contactNumber);

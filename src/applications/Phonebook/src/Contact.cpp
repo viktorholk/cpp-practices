@@ -6,7 +6,6 @@
 Contact::Contact(std::string _contactName, int _contactNumber){
     Contact::contactName    = _contactName;
     Contact::contactNumber  = _contactNumber;
-    Contact::Contacts.push_back(this);
     
 }
 
