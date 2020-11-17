@@ -21,7 +21,10 @@ void printPascal(int n){
 }
 
 int main(){
-    int n = 8;
+    int n;
+    std:: cout << "Type triangle length: ";
+    std::cin >> n;
+    std::cout << std::endl;
     printPascal(n);
     return 0;
 }
