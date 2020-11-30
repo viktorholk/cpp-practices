@@ -13,6 +13,7 @@ int binomialCoeff(int n, int k){
 
 void printPascal(int n){
     for (int i = 0; i < n; i++){
+        std::cout << " > ";
         for (int j = 0; j <= i; j++){
             std::cout << binomialCoeff(i, j);
         }
