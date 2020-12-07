@@ -7,7 +7,7 @@ class Book{
         std::string Author;
         bool CheckedOut;
 
-        Book(int id, std::string title, std::string author);
+        Book(int id, std::string title, std::string author, bool Checkedout);
 
         bool operator==(const Book &book) const{
             if (Title.compare(book.Title) == 0){

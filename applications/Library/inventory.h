@@ -9,7 +9,6 @@ class Inventory{
 
         void AddBook(Book book);
         void RemoveBook(Book book);
-        Book FindBookByTitle(std::string title);
-        void CheckOutBook(Book book);
-        void CheckinBook(Book book);
+        void CheckBook(Book book, bool checked);
+        Book FindBookById(int id);
 };  

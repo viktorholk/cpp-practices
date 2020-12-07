@@ -8,6 +8,13 @@ Inventory inventory;
 
 int main(){
 
+    // Init default books
+    inventory.AddBook(Book(inventory.Books.size() + 1, "The awaken", "Peter Griffen", false));
+    inventory.AddBook(Book(inventory.Books.size() + 1, "Solstice", "Yeek", true));
+    inventory.AddBook(Book(inventory.Books.size() + 1, "Feeling", "Syn cole", true));
+    inventory.AddBook(Book(inventory.Books.size() + 1, "Miracle man", "Oliver", false));
+    
+
     while (true){
         std::cout << std::endl;
         std::cout << "Choose an option" << std::endl;
@@ -36,14 +43,14 @@ int main(){
                 std::string author;
                 std::getline(std::cin, author);
 
-                Book newBook(inventory.Books.size() + 1, title, author);
+                Book newBook(inventory.Books.size() + 1, title, author, false);
 
                 inventory.AddBook(newBook);
                 break;
             }
             case 2: {
                 for (int i = 0; i < inventory.Books.size(); i++){
-                    std::cout << inventory.Books[i].Id << " > " << inventory.Books[i].Title;
+                    std::cout << inventory.Books[i].Id << " > " << inventory.Books[i].Title << " > " << inventory.Books[i].CheckedOut;
                     std::cout << std::endl;
                 }
                 getch();
