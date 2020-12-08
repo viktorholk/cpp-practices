@@ -5,17 +5,12 @@
 #include <algorithm>
 class Phonebook{
     public:
-        static inline std::vector<Contact> Contacts;
+        std::vector<Contact> Contacts;
 
         void AddContact(Contact contact);
-        void RemoveContact(Contact contact);
+        void RemoveContact(int id);
+        void EditContact(Contact contact, Contact overwrite);
 
-        int inline GetContactIndex(Contact contact);
-
-        int maxContacts;
-        Phonebook(int _maxContacts);
-
-  private:
 
 };
 

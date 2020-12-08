@@ -5,11 +5,12 @@
 #include <vector>
 class Contact{
     public:
-        std::string contactName;
-        int contactNumber;
-        Contact(std::string _contactName, int _contactNumber);
+        std::string Name;
+        int         PhoneNumber;
+        std::string City;
+        std::string Address;
 
-        std::string GetName();
+        Contact(std::string name, int phonenumber, std::string city, std::string address);
 };
 
 #endif // PHONEBOOK_CONTACT

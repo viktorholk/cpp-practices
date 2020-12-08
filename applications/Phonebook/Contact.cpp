@@ -3,12 +3,10 @@
 #include <iostream>
 #include <vector>
 
-Contact::Contact(std::string _contactName, int _contactNumber){
-    Contact::contactName    = _contactName;
-    Contact::contactNumber  = _contactNumber;
-    
-}
 
-std::string Contact::GetName(){
-    return Contact::contactName;
+Contact::Contact(std::string name, int phonenumber, std::string city, std::string address){
+    Contact::Name           = name;
+    Contact::PhoneNumber    = phonenumber;
+    Contact::City           = city;
+    Contact::Address        = address;
 }
